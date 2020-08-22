@@ -47,6 +47,7 @@ function start() {
     .then(function (answer) {
       console.log(answer);
       switch (answer.menu) {
+        
         case "Add Employees":
           askEmployeeCreateQuestions()
 
@@ -55,12 +56,46 @@ function start() {
         case "Add Department":
           // code block
           break;
-        default:
-        // code block
+        case "View All Employees" :
+        viewAllEmployees();
+        break;
+
+        case "View All roles" :
+        viewAllRoles();
+        break;
+
+        case "View All Department" :
+        viewAllDepts();
+        break;
+
       }
 
     });
 }
+
+const viewAllEmployees = () => {
+  connectionQuery("SELECT * FROM employee")
+  .then( res => {
+    console.table(res);
+    start();
+  })
+}
+
+const viewAllDepts = () => {
+  connectionQuery("SELECT * FROM department")
+  .then( res => {
+    console.table(res);
+    start();
+  })
+}
+const viewAllRoles = () => {
+  connectionQuery("SELECT * FROM role")
+  .then( res => {
+    console.table(res);
+    start();
+  })
+}
+
 const createEmployees = datarecord => {
 
   connection.query("INSERT INTO employee SET ?;", datarecord, function (err, results) {
