@@ -1,10 +1,12 @@
 create database tracker_db;
 USE tracker_db;
+--create deparment table
 CREATE TABLE department(
 id int not null auto_increment,
 name varchar(30),
 primary key(id)
 );
+--create role table
 CREATE TABLE role(
 id int not null auto_increment,
 title varchar(30),
@@ -13,6 +15,8 @@ department_id int,
 foreign key(department_id) references department(id),
 primary key(id)
 );
+
+--create employee table
 CREATE TABLE employee(
 id int not null auto_increment,
 first_name varchar(30),
