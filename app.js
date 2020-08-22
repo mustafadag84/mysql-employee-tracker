@@ -42,6 +42,57 @@ function start() {
     ]
       })
       .then(function(answer) {
+        switch(answer) {
+          case "Add Employees":
+            askEmployeeCreateQuestions()
+
+            // code block
+            break;
+          case y:
+            // code block
+            break;
+          default:
+            // code block
+        }
         
       });
   }
+  const addEmployees = datarecord => {
+     
+     connection.query("INSERT INTO employee SET ?;", datarecord, function(err,results){
+      if(err) throw err;
+      start();
+     })
+
+  }
+  const askEmployeeCreateQuestions = () => {
+    // if they want to add a bidder,
+    // ask "What is your first name?",
+    // ask "What is your last name?"
+    return inquirer.prompt([
+        {
+            message: "What is employee's first name?",
+            type: "input",
+            name: "first_name"
+        },
+        {
+            message: "What is employee's last name?",
+            type: "input",
+            name: "last_name"
+        },
+        {
+          message: "What is employee's role id?",
+          type: "input",
+          name: "role_id"
+      },
+      {
+        message: "What is employee's role id?",
+        type: "input",
+        name: "role_id"
+      }
+    ])
+    .then(response => {
+        return createEmployees(response);
+    });
+};
+ 
