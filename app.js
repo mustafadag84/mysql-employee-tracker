@@ -88,7 +88,7 @@ const askEmployeeCreateQuestions = () => {
   // last_name varchar(30),
   // role_id int,
   // manager_id int,
-  
+
   let roles;
   let managers;
   return connectionQuery("select * from role")
@@ -164,40 +164,40 @@ const addDepartment = () => {
       departmentIdList.push(res[i].id.toString());
     }
 
-        inquirer
-          .prompt([
-            {
-              type: "input",
-              name: "department",
-              message: "Enter Department Name",
-            },
-          ])
-          .then((val) => {
-            connection.query(
-              "INSERT INTO department SET ?",
-              {
-                name: val.department,
-              },
-              function (err, res) {
-                if (err) throw err;
-                console.log("\n");
-                console.log("successfully added Department");
-                console.log("\n");
-                start();
-              }
-            );
-          });
-      }
-    );
-  };
+    inquirer
+      .prompt([
+        {
+          type: "input",
+          name: "department",
+          message: "Enter Department Name",
+        },
+      ])
+      .then((val) => {
+        connection.query(
+          "INSERT INTO department SET ?",
+          {
+            name: val.department,
+          },
+          function (err, res) {
+            if (err) throw err;
+            console.log("\n");
+            console.log("successfully added Department");
+            console.log("\n");
+            start();
+          }
+        );
+      });
+  }
+  );
+};
 
 //  add role
 const addRole = () => {
   let roleList = [];
   let roleIdList = [];
 
-  let salaryList =[];
-  let deptIdList =[];
+  let salaryList = [];
+  let deptIdList = [];
 
   connection.query("SELECT role.id, title, salary, department_id FROM role LEFT JOIN department ON role.department_id = department.id;", function (
     err,
@@ -211,42 +211,42 @@ const addRole = () => {
       deptIdList.push(res[i].department_id)
     }
 
-        inquirer
-          .prompt([
-            {
-              type: "input",
-              name: "title",
-              message: "Enter Role Name"
-            },
-            {
-              type: "number",
-              name: "salary",
-              message: "Enter Salary"
-            },
-            {
-              type: "input",
-              name: "deptId",
-              message: "Enter Department ID"
-            },
-          ])
-          .then((val) => {
-            connection.query(
-              "INSERT INTO role SET ?",
-              {
-                title: val.title,
-              },
-              function (err, res) {
-                if (err) throw err;
-                console.log("\n");
-                console.log("successfully added Role");
-                console.log("\n");
-                start();
-              }
-            );
-          });
-      }
-    );
-    };
+    inquirer
+      .prompt([
+        {
+          type: "input",
+          name: "title",
+          message: "Enter Role Name"
+        },
+        {
+          type: "number",
+          name: "salary",
+          message: "Enter Salary"
+        },
+        {
+          type: "input",
+          name: "deptId",
+          message: "Enter Department ID"
+        },
+      ])
+      .then((val) => {
+        connection.query(
+          "INSERT INTO role SET ?",
+          {
+            title: val.title,
+          },
+          function (err, res) {
+            if (err) throw err;
+            console.log("\n");
+            console.log("successfully added Role");
+            console.log("\n");
+            start();
+          }
+        );
+      });
+  }
+  );
+};
 
 
 
@@ -276,4 +276,32 @@ const viewAllRoles = () => {
     })
 }
 
+const updateEmployeeRole = () => {
 
+  inquirer
+    .prompt({
+      name: "id",
+      type: "input",
+      message: "Enter employee ID",
+    })
+    .then(function (answer) {
+      var id = answer.id;
+      inquirer
+        .prompt({
+          name: "roleId",
+          type: "input",
+          message: "Enter role ID",
+        })
+        .then(function (answer) {
+          var roleId = answer.roleId;
+          var query = "UPDATE employee SET role_id=? WHERE id=?";
+          connection.query(query, [roleId, id], function (err, res) {
+            if (err) {
+              console.log(err);
+            }
+            console.log('updating employee role');
+            start();
+          });
+        });
+    });
+}
