@@ -47,53 +47,32 @@ function start() {
     .then(function (answer) {
       console.log(answer);
       switch (answer.menu) {
-        
+        case "Add Department":
+          addDepartment();
+          break;
+        case "Add Role":
+          addRole();
+          break;
         case "Add Employees":
           askEmployeeCreateQuestions()
-
-          // code block
           break;
-        case "Add Department":
-          // code block
+        case "View All Department":
+          viewAllDepts();
           break;
-        case "View All Employees" :
-        viewAllEmployees();
-        break;
+        case "View All roles":
+          viewAllRoles();
+          break;
+        case "View All Employees":
+          viewAllEmployees();
+          break;
+        case "Update Employee Role":
+          updateEmployeeRole();
+          break;
 
-        case "View All roles" :
-        viewAllRoles();
-        break;
-
-        case "View All Department" :
-        viewAllDepts();
-        break;
 
       }
 
     });
-}
-
-const viewAllEmployees = () => {
-  connectionQuery("SELECT * FROM employee")
-  .then( res => {
-    console.table(res);
-    start();
-  })
-}
-
-const viewAllDepts = () => {
-  connectionQuery("SELECT * FROM department")
-  .then( res => {
-    console.table(res);
-    start();
-  })
-}
-const viewAllRoles = () => {
-  connectionQuery("SELECT * FROM role")
-  .then( res => {
-    console.table(res);
-    start();
-  })
 }
 
 const createEmployees = datarecord => {
@@ -109,6 +88,7 @@ const askEmployeeCreateQuestions = () => {
   // last_name varchar(30),
   // role_id int,
   // manager_id int,
+  
   let roles;
   let managers;
   return connectionQuery("select * from role")
@@ -168,4 +148,132 @@ const askEmployeeCreateQuestions = () => {
     });
 
 };
+
+// add department
+const addDepartment = () => {
+  let departmentList = [];
+  let departmentIdList = [];
+
+  connection.query("SELECT * FROM tracker_db.department", function (
+    err,
+    res
+  ) {
+    if (err) throw err;
+    for (var i = 0; i < res.length; i++) {
+      departmentList.push(res[i].name);
+      departmentIdList.push(res[i].id.toString());
+    }
+
+        inquirer
+          .prompt([
+            {
+              type: "input",
+              name: "department",
+              message: "Enter Department Name",
+            },
+          ])
+          .then((val) => {
+            connection.query(
+              "INSERT INTO department SET ?",
+              {
+                name: val.department,
+              },
+              function (err, res) {
+                if (err) throw err;
+                console.log("\n");
+                console.log("successfully added Department");
+                console.log("\n");
+                start();
+              }
+            );
+          });
+      }
+    );
+  };
+
+//  add role
+const addRole = () => {
+  let roleList = [];
+  let roleIdList = [];
+
+  let salaryList =[];
+  let deptIdList =[];
+
+  connection.query("SELECT role.id, title, salary, department_id FROM role LEFT JOIN department ON role.department_id = department.id;", function (
+    err,
+    res
+  ) {
+    if (err) console.log(err);
+    for (var i = 0; i < res.length; i++) {
+      roleList.push(res[i].title);
+      roleIdList.push(res[i].id.toString());
+      salaryList.push(res[i].salary);
+      deptIdList.push(res[i].department_id)
+    }
+
+        inquirer
+          .prompt([
+            {
+              type: "input",
+              name: "title",
+              message: "Enter Role Name"
+            },
+            {
+              type: "number",
+              name: "salary",
+              message: "Enter Salary"
+            },
+            {
+              type: "input",
+              name: "deptId",
+              message: "Enter Department ID"
+            },
+          ])
+          .then((val) => {
+            connection.query(
+              "INSERT INTO role SET ?",
+              {
+                title: val.title,
+              },
+              function (err, res) {
+                if (err) throw err;
+                console.log("\n");
+                console.log("successfully added Role");
+                console.log("\n");
+                start();
+              }
+            );
+          });
+      }
+    );
+    };
+
+
+
+
+
+
+const viewAllEmployees = () => {
+  connectionQuery("SELECT * FROM employee")
+    .then(res => {
+      console.table(res);
+      start();
+    })
+}
+
+const viewAllDepts = () => {
+  connectionQuery("SELECT * FROM department")
+    .then(res => {
+      console.table(res);
+      start();
+    })
+}
+const viewAllRoles = () => {
+  connectionQuery("SELECT * FROM role")
+    .then(res => {
+      console.table(res);
+      start();
+    })
+}
+
 
