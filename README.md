@@ -1,6 +1,6 @@
 # mysql-employee-tracker
 
-# # Description
+# Description
 Developers are often tasked with creating interfaces that make it easy for non-developers to view and interact with information stored in databases. Often these interfaces are known as **C**ontent **M**anagement **S**ystems. This application architected and built to bring a solution for managing a company's employees using node, inquirer, and MySQL.
 
 
@@ -27,6 +27,7 @@ Application allows the user to:
 
 * [The URL of the GitHub repository](https://github.com/mustafadag84/mysql-employee-tracker)
 
-* A video demonstrating the entirety of the app's functionality 
+* Video demonstrating the entirety of the app's functionality 
+* https://drive.google.com/file/d/17OENAf_4_zBU3DRgHjsXpiUxOIAwpy7-/view
 
 - - -
