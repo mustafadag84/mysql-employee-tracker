@@ -56,10 +56,11 @@ function start() {
         case "Add Employees":
           askEmployeeCreateQuestions()
           break;
-        case "View All Department":
+        case "View All Departments":
           viewAllDepts();
+         
           break;
-        case "View All roles":
+        case "View All Roles":
           viewAllRoles();
           break;
         case "View All Employees":
@@ -262,13 +263,16 @@ const viewAllEmployees = () => {
 }
 
 const viewAllDepts = () => {
+  console.log("inside viewAllDepts");
   connectionQuery("SELECT * FROM department")
+
     .then(res => {
       console.table(res);
       start();
     })
 }
 const viewAllRoles = () => {
+  console.log("inside viewAllRoles function");
   connectionQuery("SELECT * FROM role")
     .then(res => {
       console.table(res);
