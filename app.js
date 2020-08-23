@@ -75,6 +75,7 @@ function start() {
 
     });
 }
+//            FUNCTIONS
 
 const createEmployees = datarecord => {
 
@@ -248,10 +249,6 @@ const addRole = () => {
   }
   );
 };
-
-
-
-
 
 
 const viewAllEmployees = () => {
